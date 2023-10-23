@@ -20,7 +20,7 @@ function create_options_page_pbs() {
     
     ])
     ->add_fields([
-        Field::make( 'checkbox', 'cart_remove_active', __( 'Checkout Page Cart Item Delete' ) ),
+        Field::make( 'checkbox', 'cart_remove_active', __( 'Delete Cart Items on Checkout Page' ) ),
         // ->set_html( '<h2>Lorem ipsum</h2><p>Quisque mattis ligula.</p>' ),\\
         Field::make( 'html', 'crb_information_text' )
     ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/cart-remove.png" width="400"/>')
