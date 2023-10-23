@@ -12,6 +12,18 @@ function run_filter() {
         add_filter( 'woocommerce_cart_item_name', 'delete_cart_items_from_checkout_page', 10, 3 );
     }
 
+    if(get_pbs_fields('cart_empty_leaving_checkout_active') == 'yes') {
+        add_action( 'wp_head', 'bryce_clear_cart' );
+    }
+
+    if(get_pbs_fields('return_to_shop_url_active') == 'yes') {
+        add_filter( 'woocommerce_return_to_shop_redirect', 'pbs_wc_empty_cart_redirect_url' );
+    }
+
+    if(get_pbs_fields('return_to_shop_text_active') == 'yes') {
+        add_filter( 'gettext', 'change_wc_return_to_shop_text', 20, 3 );
+    }
+
 }
 
 function add_to_cart_button_text()
@@ -59,4 +71,36 @@ function delete_cart_items_from_checkout_page($product_name, $cart_item, $cart_i
         }
     }
     return $product_name;
+}
+
+
+function bryce_clear_cart() {
+    if(get_pbs_fields('cart_empty_leaving_checkout_active') == 'yes') {
+        if ( wc_get_page_id( 'cart' ) == get_the_ID() || wc_get_page_id( 'checkout' ) == get_the_ID() ) {
+            return;
+        }
+        WC()->cart->empty_cart( true );
+    }
+}
+
+function pbs_wc_empty_cart_redirect_url() {
+    if(get_pbs_fields('return_to_shop_url_active') == 'yes') {
+        $url = get_pbs_fields('return_to_shop_url'); // change this link to your need
+        return esc_url( $url );
+    }
+}
+
+
+function change_wc_return_to_shop_text( $translated_text, $text, $domain ) {
+
+    if(get_pbs_fields('return_to_shop_text_active') == 'yes') {
+        $custom_text_rts = get_pbs_fields('return_to_shop_text');
+        switch ( $translated_text ) {
+            case 'Return to shop' :
+                $translated_text = __( $custom_text_rts, 'woocommerce' );
+                break;
+        }
+        return $translated_text;
+    }
+
 }
