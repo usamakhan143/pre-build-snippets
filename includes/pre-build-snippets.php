@@ -24,6 +24,14 @@ function run_filter() {
         add_filter( 'gettext', 'change_wc_return_to_shop_text', 20, 3 );
     }
 
+    if(get_pbs_fields('wc_price_suffix_active') == 'yes') {
+        add_filter( 'woocommerce_get_price_suffix', 'pbs_add_price_suffix', 99, 4 );
+    }
+
+    if(get_pbs_fields('wc_price_prefix_active') == 'yes') {
+        add_filter( 'woocommerce_get_price_html', 'pbs_add_price_prefix', 99, 2 );
+    }
+
 }
 
 function add_to_cart_button_text()
@@ -75,19 +83,24 @@ function delete_cart_items_from_checkout_page($product_name, $cart_item, $cart_i
 
 
 function bryce_clear_cart() {
+
     if(get_pbs_fields('cart_empty_leaving_checkout_active') == 'yes') {
         if ( wc_get_page_id( 'cart' ) == get_the_ID() || wc_get_page_id( 'checkout' ) == get_the_ID() ) {
             return;
         }
         WC()->cart->empty_cart( true );
     }
+
 }
 
+
 function pbs_wc_empty_cart_redirect_url() {
+
     if(get_pbs_fields('return_to_shop_url_active') == 'yes') {
         $url = get_pbs_fields('return_to_shop_url'); // change this link to your need
         return esc_url( $url );
     }
+
 }
 
 
@@ -103,4 +116,25 @@ function change_wc_return_to_shop_text( $translated_text, $text, $domain ) {
         return $translated_text;
     }
 
+}
+
+  
+function pbs_add_price_suffix( $html, $product, $price, $qty ){
+    
+    if(get_pbs_fields('wc_price_suffix_active') == 'yes') {
+        $wc_suffix = get_pbs_fields('wc_suffix_price');
+        $html .= ' '.$wc_suffix;
+        return $html;
+    }
+
+}
+
+
+function pbs_add_price_prefix( $price, $product ){
+    
+    if(get_pbs_fields('wc_price_prefix_active') == 'yes') {
+        $wc_prefix = get_pbs_fields('wc_prefix_price');
+        $price = $wc_prefix.' '. $price;
+        return $price;
+    }
 }

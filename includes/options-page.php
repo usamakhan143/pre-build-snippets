@@ -57,6 +57,30 @@ function create_options_page_pbs() {
         // ->set_html( '<h2>Lorem ipsum</h2><p>Quisque mattis ligula.</p>' ),\\
         Field::make( 'html', 'return_to_shop_text_information_text' )
     ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/return-to-shop-text.png" width="300"/>')
+    ])
+    ->add_fields([
+        Field::make( 'checkbox', 'wc_price_suffix_active', __( 'Add Suffix to WooCommerce Price' ) ),
+        Field::make( 'text', 'wc_suffix_price', 'Suffix' )
+        ->set_conditional_logic( array(
+                array(
+                    'field' => 'wc_price_suffix_active',
+                    'value' => true,
+                )
+        ))
+        ->set_attribute('placeholder', 'Enter Suffix Text')
+        ->set_help_text('E.g. $20 per day, The "per day" is a suffix')
+    ])
+    ->add_fields([
+        Field::make( 'checkbox', 'wc_price_prefix_active', __( 'Add Prefix to WooCommerce Price' ) ),
+        Field::make( 'text', 'wc_prefix_price', 'Prefix' )
+        ->set_conditional_logic( array(
+                array(
+                    'field' => 'wc_price_prefix_active',
+                    'value' => true,
+                )
+        ))
+        ->set_attribute('placeholder', 'Enter Prefix Text')
+        ->set_help_text('E.g. Starting from $20, The "Starting from" is a Prefix')
     ]);  
 }
 
