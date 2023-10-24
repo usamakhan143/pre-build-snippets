@@ -32,6 +32,14 @@ function run_filter() {
         add_filter( 'woocommerce_get_price_html', 'pbs_add_price_prefix', 99, 2 );
     }
 
+    if(get_pbs_fields('custom_add_to_cart_btn_active') == 'yes') {
+        add_filter( 'woocommerce_loop_add_to_cart_link', 'pbs_custom_view_product_button', 10, 2 );
+    }
+    
+    if(get_pbs_fields('login_before_checkout_active') == 'yes') {
+        add_filter( 'template_redirect', 'check_if_logged_in_before_wc_checkout', 10, 2 );
+    }
+
 }
 
 function add_to_cart_button_text()
@@ -47,7 +55,7 @@ function add_to_cart_button_text()
         }
     }
     else {
-        return __('Add to cart', 'woocommerce' );
+        return __('Add to cart', 'woocommerce');
     }
 }
 
@@ -136,5 +144,40 @@ function pbs_add_price_prefix( $price, $product ){
         $wc_prefix = get_pbs_fields('wc_prefix_price');
         $price = $wc_prefix.' '. $price;
         return $price;
+    }
+}
+
+
+/**
+* @snippet Change WooCommerce ‘Add to Cart’ button to 'Custom Button'
+* @compatible WC 4.3.1
+*/
+// Change WooCommerce 'Add To Cart' button to 'View Product'
+function pbs_custom_view_product_button( $button, $product  ) {
+        
+    if(get_pbs_fields('custom_add_to_cart_btn_active') == 'yes') {
+        // Ignore for variable products
+        if( $product->is_type( 'variable' ) ) return $button;
+        // Button text here
+        $btn_text = get_pbs_fields('custom_add_to_cart_btn');
+        $button_text = __( $btn_text, "woocommerce" );
+            return '<a class="button pbs-custom-view-product-button" href="' . $product->get_permalink() . '">' . $button_text . '</a>';
+    }
+
+}
+
+
+function check_if_logged_in_before_wc_checkout()
+{
+    $pageid = get_pbs_fields('wc_checkout_page_id'); // your checkout page id
+    if(!is_user_logged_in() && is_page($pageid))
+    {
+        $url = add_query_arg(
+            'redirect_to',
+            get_permalink($pagid),
+            site_url('/my-account/') // your my acount url
+        );
+        wp_redirect($url);
+        exit;
     }
 }

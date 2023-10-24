@@ -8,7 +8,7 @@ function create_options_page_pbs() {
     Container::make( 'theme_options', __( 'Pre Build Snippets' ) )
     ->set_icon('dashicons-media-code')
     ->add_fields([
-        Field::make( 'checkbox', 'add_to_cart_button_text_active', __( 'Change Add to cart button text' ) ),
+        Field::make( 'checkbox', 'add_to_cart_button_text_active', __( 'Change WooCommerce Add to cart button text' ) ),
         Field::make( 'text', 'add_to_cart_button_text', 'Add to Cart Button Text' )
         ->set_conditional_logic( array(
                 array(
@@ -20,16 +20,16 @@ function create_options_page_pbs() {
     
     ])
     ->add_fields([
-        Field::make( 'checkbox', 'cart_remove_active', __( 'Delete cart items on the checkout page' ) ),
+        Field::make( 'checkbox', 'cart_remove_active', __( 'Delete WooCommerce cart items on the checkout page' ) ),
         // ->set_html( '<h2>Lorem ipsum</h2><p>Quisque mattis ligula.</p>' ),\\
         Field::make( 'html', 'crb_information_text' )
-    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/cart-remove.png" width="400"/>')
+    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/cart-remove.png" width="300"/>')
     ])
     ->add_fields([
-        Field::make( 'checkbox', 'cart_empty_leaving_checkout_active', __( 'Empty the cart after leaving the checkout without making a purchase' ) ),
+        Field::make( 'checkbox', 'cart_empty_leaving_checkout_active', __( 'Empty the WooCommerce cart after leaving the checkout without making a purchase' ) ),
     ])
     ->add_fields([
-        Field::make( 'checkbox', 'return_to_shop_url_active', __( 'Change "Return to Shop" URL' ) ),
+        Field::make( 'checkbox', 'return_to_shop_url_active', __( 'Change WooCommerce "Return to Shop" URL' ) ),
         Field::make( 'text', 'return_to_shop_url', 'Change Return to Shop URL' )
         ->set_conditional_logic( array(
                 array(
@@ -44,7 +44,7 @@ function create_options_page_pbs() {
     ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/return-to-shop.png" width="300"/>')
     ])
     ->add_fields([
-        Field::make( 'checkbox', 'return_to_shop_text_active', __( 'Change "Return to Shop" Text' ) ),
+        Field::make( 'checkbox', 'return_to_shop_text_active', __( 'Change WooCommerce "Return to Shop" Text' ) ),
         Field::make( 'text', 'return_to_shop_text', 'Change Return to Shop Button Text' )
         ->set_conditional_logic( array(
                 array(
@@ -81,6 +81,28 @@ function create_options_page_pbs() {
         ))
         ->set_attribute('placeholder', 'Enter Prefix Text')
         ->set_help_text('E.g. Starting from $20, The "Starting from" is a Prefix')
+    ])
+    ->add_fields([
+        Field::make( 'checkbox', 'custom_add_to_cart_btn_active', __( 'Create a custom button on the WooCommerce catalog page that can navigate you to the single product page' ) ),
+        Field::make( 'text', 'custom_add_to_cart_btn', 'Button Text' )
+        ->set_conditional_logic( array(
+                array(
+                    'field' => 'custom_add_to_cart_btn_active',
+                    'value' => true,
+                )
+        ))
+        ->set_attribute('placeholder', 'Enter Custom Text')
+    ])
+    ->add_fields([
+        Field::make( 'checkbox', 'login_before_checkout_active', __( 'Login before WooCommerce checkout' ) ),
+        Field::make( 'text', 'wc_checkout_page_id', 'WooCommerce Checkout Page ID' )
+        ->set_conditional_logic( array(
+                array(
+                    'field' => 'login_before_checkout_active',
+                    'value' => true,
+                )
+        ))
+        ->set_attribute('placeholder', 'Enter your WooCommerce Checkout Page ID')
     ]);  
 }
 
@@ -88,4 +110,3 @@ add_action( 'after_setup_theme', 'crb_load_pbs' );
 function crb_load_pbs() {
     \Carbon_Fields\Carbon_Fields::boot();
 }
-
