@@ -23,7 +23,7 @@ function create_options_page_pbs() {
         Field::make( 'checkbox', 'cart_remove_active', __( 'Delete WooCommerce cart items on the checkout page' ) ),
         // ->set_html( '<h2>Lorem ipsum</h2><p>Quisque mattis ligula.</p>' ),\\
         Field::make( 'html', 'crb_information_text' )
-    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/cart-remove.png" width="300"/>')
+    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/images/cart-remove.png" width="300"/>')
     ])
     ->add_fields([
         Field::make( 'checkbox', 'cart_empty_leaving_checkout_active', __( 'Empty the WooCommerce cart after leaving the checkout without making a purchase' ) ),
@@ -41,7 +41,7 @@ function create_options_page_pbs() {
         ->set_help_text('https://domain.com'),
         // ->set_html( '<h2>Lorem ipsum</h2><p>Quisque mattis ligula.</p>' ),\\
         Field::make( 'html', 'return_to_shop_url_information_text' )
-    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/return-to-shop.png" width="300"/>')
+    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/images/return-to-shop.png" width="300"/>')
     ])
     ->add_fields([
         Field::make( 'checkbox', 'return_to_shop_text_active', __( 'Change WooCommerce "Return to Shop" Text' ) ),
@@ -56,7 +56,7 @@ function create_options_page_pbs() {
         ->set_help_text('E.g. Back to Home'),
         // ->set_html( '<h2>Lorem ipsum</h2><p>Quisque mattis ligula.</p>' ),\\
         Field::make( 'html', 'return_to_shop_text_information_text' )
-    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/return-to-shop-text.png" width="300"/>')
+    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/images/return-to-shop-text.png" width="300"/>')
     ])
     ->add_fields([
         Field::make( 'checkbox', 'wc_price_suffix_active', __( 'Add Suffix to WooCommerce Price' ) ),
@@ -107,7 +107,7 @@ function create_options_page_pbs() {
     ->add_fields([
         Field::make( 'checkbox', 'yith_booking_checkout_css_active', __( 'Checkout CSS when Yith Booking Enabled' ) ),
         Field::make( 'html', 'yith_booking_checkout_css_information_text' )
-    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/yith-booking-checkout-css.png" width="300"/>')
+    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/images/yith-booking-checkout-css.png" width="300"/>')
         // ->set_help_text('If Yith Booking is enable use this css to fix the checkout order details section')
     ]);  
 }
