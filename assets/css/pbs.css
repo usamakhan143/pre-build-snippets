@@ -1,0 +1,6 @@
+.woocommerce-page.woocommerce-checkout form #order_review td.product-name,
+.woocommerce.woocommerce-checkout form #order_review td.product-name {
+  font-weight: 500;
+  display: block;
+  align-items: center;
+}

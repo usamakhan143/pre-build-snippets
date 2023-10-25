@@ -39,6 +39,10 @@ function run_filter() {
     if(get_pbs_fields('login_before_checkout_active') == 'yes') {
         add_filter( 'template_redirect', 'check_if_logged_in_before_wc_checkout', 10, 2 );
     }
+    
+    if(get_pbs_fields('yith_booking_checkout_css_active') == 'yes') {
+        add_action( 'wp_enqueue_scripts', 'pbs_enqueue_custom_css' );
+    }
 
 }
 
@@ -169,15 +173,25 @@ function pbs_custom_view_product_button( $button, $product  ) {
 
 function check_if_logged_in_before_wc_checkout()
 {
-    $pageid = get_pbs_fields('wc_checkout_page_id'); // your checkout page id
-    if(!is_user_logged_in() && is_page($pageid))
-    {
-        $url = add_query_arg(
-            'redirect_to',
-            get_permalink($pagid),
-            site_url('/my-account/') // your my acount url
-        );
-        wp_redirect($url);
-        exit;
+    if(get_pbs_fields('login_before_checkout_active') == 'yes') {
+        $pageid = get_pbs_fields('wc_checkout_page_id'); // your checkout page id
+        if(!is_user_logged_in() && is_page($pageid))
+        {
+            $url = add_query_arg(
+                'redirect_to',
+                get_permalink($pagid),
+                site_url('/my-account/') // your my acount url
+            );
+            wp_redirect($url);
+            exit;
+        }
+    }
+}
+
+
+function pbs_enqueue_custom_css(){
+    
+    if(get_pbs_fields('yith_booking_checkout_css_active') == 'yes') {
+        wp_enqueue_style('pre-build-snippets', PRE_BUILD_SNIPPETS_URL . 'assets/css/pbs.css');
     }
 }

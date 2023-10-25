@@ -103,6 +103,12 @@ function create_options_page_pbs() {
                 )
         ))
         ->set_attribute('placeholder', 'Enter your WooCommerce Checkout Page ID')
+    ])
+    ->add_fields([
+        Field::make( 'checkbox', 'yith_booking_checkout_css_active', __( 'Checkout CSS when Yith Booking Enabled' ) ),
+        Field::make( 'html', 'yith_booking_checkout_css_information_text' )
+    ->set_html( '<img src="' . PRE_BUILD_SNIPPETS_URL . 'assets/yith-booking-checkout-css.png" width="300"/>')
+        // ->set_help_text('If Yith Booking is enable use this css to fix the checkout order details section')
     ]);  
 }
 
