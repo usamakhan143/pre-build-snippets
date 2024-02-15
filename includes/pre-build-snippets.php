@@ -25,7 +25,8 @@ function run_filter() {
     }
 
     if(get_pbs_fields('wc_price_suffix_active') == 'yes') {
-        add_filter( 'woocommerce_get_price_suffix', 'pbs_add_price_suffix', 99, 4 );
+        add_filter( 'woocommerce_get_price_html', 'pbs_add_price_suffix' );
+		add_filter( 'woocommerce_cart_item_price', 'pbs_add_price_suffix' );
     }
 
     if(get_pbs_fields('wc_price_prefix_active') == 'yes') {
@@ -131,12 +132,12 @@ function change_wc_return_to_shop_text( $translated_text, $text, $domain ) {
 }
 
   
-function pbs_add_price_suffix( $html, $product, $price, $qty ){
+function pbs_add_price_suffix( $price ){
     
     if(get_pbs_fields('wc_price_suffix_active') == 'yes') {
         $wc_suffix = get_pbs_fields('wc_suffix_price');
-        $html .= ' '.$wc_suffix;
-        return $html;
+        $price .= ' '.$wc_suffix;
+        return $price;
     }
 
 }
