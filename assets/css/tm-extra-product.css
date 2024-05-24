@@ -1,0 +1,10 @@
+.tc-extra-product-options {
+  padding: 20px;
+  border: 1px solid gray;
+  margin-bottom: 10px;
+  border-radius: 7px;
+}
+
+.tm-cart-edit-options {
+  display: none !important;
+}
